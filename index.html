@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        #container>div {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+    </style>
+</head>
+
+<body>
+    <h2>Rick and Morty</h2>
+    <div id="container">
+
+    </div>
+</body>
+
+</html>
+<script>
+    let container = document.getElementById('container');
+    let characters = [];
+    window.onload = async () => {
+        await getData();
+        displayCharacters();
+    }
+
+    async function getData() {
+        let response = await fetch('https://rickandmortyapi.com/api/character');
+        let data = await response.json();
+        characters = data.results;
+
+    }
+
+    function displayCharacters() {
+        characters.forEach((character) => {
+            let div = document.createElement('div');
+            let name = document.createElement('h3');
+            let species = document.createElement('h3');
+            let image = document.createElement('img');
+            console.log(name);
+            name.innerText = character.name;
+            species.innerText = character.species;
+            image.src = character.image;
+            div.append(image, name, species);
+            container.append(div);
+        })
+
+    }
+
+
+
+</script>
